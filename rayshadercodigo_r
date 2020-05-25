@@ -1,0 +1,21 @@
+library(sf)
+library(rayshader)
+library(ggplot2)
+library(tidyverse)
+library(reshape2)
+
+data("volcano")
+
+c=
+volcano %>% melt() %>% ggplot() + 
+  geom_tile(aes(x = Var1, y = Var2, fill = value)) +
+  geom_contour(aes(x = Var1, y = Var2, z = value), color = "black")+
+  scale_fill_gradientn(colours= terrain.colors(10))+
+  coord_fixed()
+
+c
+
+Sys.sleep(0.2)
+plot_gg(c, width = 5,height = 5)
+render_camera(fov = 90, zoom = 0.40)
+render_depth(focallength = 50, focus = 0.8,title_text = "Relieve", )
